@@ -1,1 +1,1 @@
-# FunD is
+# FunD(R)
