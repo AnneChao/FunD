@@ -6,7 +6,7 @@
 #
 # input data:
 # f2 denotes Fushan (second census), K3 denotes Kenting (the third census) 
-f2k3 = read.table("fskt_fd.txt")
+f2k3 = read.table("fskt_fd(abundance data&trait table).txt")
 data_f2k3 = list(f2=f2k3$fs2, k3=f2k3$kt3)
 dij_f2k3 = daisy(f2k3[, 4:6], metric = "gower") %>% as.matrix()
 
