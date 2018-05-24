@@ -47,7 +47,7 @@ FD_MLE(data_f2k3$f2, dij_f2k3, max(dij_f2k3), 2)
 #' @param datatype data type of input data: individual-based abundance data (datatype = "abundance") or species-by-sampling-unit incidence matrix (datatype = "incidence_raw").
 #' @return two matrices of FD; the first matrix is the q-profile information, the second matrix is the tau profile information.
 FunD <- function(data, dij, tau, q, boot, datatype){
-  EstiBootComm.Func_abun = function(data, distance, datatype){
+  EstiBootComm.Func = function(data, distance, datatype){
     if (datatype=="abundance") {
       n = sum(data)
     } else if (datatype=="incidence_raw") {
