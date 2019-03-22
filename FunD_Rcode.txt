@@ -5,10 +5,11 @@
 # These three packages can be downloaded from CRAN.
 #
 # input data:
-# f2 denotes Fushan (second census), K3 denotes Kenting (the third census) 
-f2k3 = read.table("fskt_fd(abundance data&trait table).txt")
-data_f2k3 = list(f2=f2k3$fs2, k3=f2k3$kt3)
-dij_f2k3 = daisy(f2k3[, 4:6], metric = "gower") %>% as.matrix()
+# fs denotes Fushan (second census), Kt denotes Kenting (the third census) 
+fskt <- read.table("Plant_Abundance.txt")
+fskt = list(fs=fskt$Fushan, kt=fskt$Kenting)
+dij_fskt = read.table("Plant_Distance_Matrix.txt")
+dij_fskt = as.matrix(dij_fskt)
 
 #------------------------------------------------------------------------------
 # Functional Diversity of a single site for specified values of tau and q
@@ -33,7 +34,7 @@ FD_MLE <- function(data, dij, tau, q){
     (sum(v*(a/nplus)^q))^(1 / (1-q))
   }
 }
-FD_MLE(data_f2k3$f2, dij_f2k3, max(dij_f2k3), 2)
+FD_MLE(fskt$fs, dij_fskt, max(dij_fskt), 2)
 
 #----------------------------------------------------------------
 # Functional Diversity of N sites for various values of tau and q
@@ -199,7 +200,7 @@ FunD <- function(data, dij, tau, q, boot, datatype){
   Output <- list(forq = Outputforq, fortau = Outputfortau)
   return(Output)
 }
-FunD(data_f2k3, dij_f2k3, seq(min(dij_f2k3[dij_f2k3>0]), max(dij_f2k3), length.out = 5), c(0, 1, 2), 50, "abundance")
+FunD(fskt, dij_fskt, seq(min(dij_fskt[dij_fskt>0]), max(dij_fskt), length.out = 5), c(0, 1, 2), 50, "abundance")
 #-----------------------------------
 # Plot FD q-profile and tau-profile
 #-----------------------------------
@@ -301,7 +302,7 @@ PlotFD <- function(out, data, dij, datatype){
   output <- list(pic1= p1, pic2 = p2)
   return(output)
 }
-PlotFD(FunD(data_f2k3, dij_f2k3, seq(min(dij_f2k3[dij_f2k3>0]), max(dij_f2k3), length.out = 5), c(0, 1, 2), 50, "abundance"), data_f2k3, dij_f2k3, "abundance")
+PlotFD(FunD(fskt, dij_fskt, seq(min(dij_fskt[dij_fskt>0]), max(dij_fskt), length.out = 5), c(0, 1, 2), 50, "abundance"), fskt, dij_fskt, "abundance")
 
 
 #-----------------------------------------------------------------
@@ -348,7 +349,7 @@ FD_Beta <- function(data, dij, tau, q, type){
   }
   out
 }
-FD_Beta(do.call(cbind, data_f2k3), dij_f2k3, max(dij_f2k3), 2, "C")
+FD_Beta(do.call(cbind, fskt), dij_fskt, max(dij_fskt), 2, "C")
 
 #----------------------------------------------------------
 # Functional Beta/Dissimilarity for various values of tau and q
@@ -564,7 +565,7 @@ MultiFD.Beta <- function(data, dij, tau, q, boot, datatype, relative = TRUE){
   Output <- list(CqNforq=CqNforq, UqNforq=UqNforq, CqNfortau=CqNfortau, UqNfortau=UqNfortau)
   return(Output)
 }
-MultiFD.Beta(data_f2k3, dij_f2k3, seq(min(dij_f2k3[dij_f2k3>0]), max(dij_f2k3), length.out = 5), c(0, 1, 2), 50, "abundance", T)
+MultiFD.Beta(fskt, dij_fskt, seq(min(dij_fskt[dij_fskt>0]), max(dij_fskt), length.out = 5), c(0, 1, 2), 50, "abundance", T)
 #--------------------------------------------------------
 # Plot functional dissimilarity q-profile and tau-profile
 #--------------------------------------------------------
@@ -653,5 +654,5 @@ PlotBeta <- function(out, data, dij, datatype, relative = TRUE){
   output <- list(p1Cforq= p1Cforq, p1Uforq = p1Uforq, p2Cfortau=p2Cfortau, p2Ufortau=p2Ufortau )
   return(output)
 }
-PlotBeta(MultiFD.Beta(data_f2k3, dij_f2k3, seq(min(dij_f2k3[dij_f2k3>0]), max(dij_f2k3), length.out = 17), seq(0, 2, length.out =17), 100, "abundance", T), 
-         data_f2k3, dij_f2k3, "abundance", T)
+PlotBeta(MultiFD.Beta(fskt, dij_fskt, seq(min(dij_fskt[dij_fskt>0]), max(dij_fskt), length.out = 17), seq(0, 2, length.out =17), 100, "abundance", T), 
+         fskt, dij_fskt, "abundance", T)
