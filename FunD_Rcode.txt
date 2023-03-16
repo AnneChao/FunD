@@ -244,58 +244,58 @@ PlotFD <- function(out, data, dij, datatype){
   site <- unique(forq$site)
   if(length(site)==1){
     p1 <- ggplot(data=forq) + 
-      geom_line(aes(x=q, y=estimate, color=tau, group=tau), size=1.2)+
+      geom_line(aes(x=q, y=estimate, color=tau, group=tau), linewidth=1.2)+
       geom_ribbon(aes(x=q,ymin=LCL, ymax=UCL, fill=tau, group=tau), alpha=0.3)+
       theme(legend.position = "bottom")+
       scale_color_discrete(name="method")+
       xlab("Order q")+ylab("Functional Diversity")+
-      guides(fill="none", linetype=F)
+      guides(fill="none", linetype="none")
     p2=ggplot(fortau) + 
-      geom_line(aes(x=tau, y=estimate, color=q,group=q), size=1.5)  + 
+      geom_line(aes(x=tau, y=estimate, color=q,group=q), linewidth=1.5)  + 
       geom_ribbon(aes(x=tau, ymin=LCL, ymax=UCL, fill=q), alpha=0.3)+
       annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
       annotate('text',x=dmean, y=0.1, label="d[mean]",parse = TRUE,size=10) +
       annotate('text',x=dmax, y=0.1, label="d[max]",parse = TRUE,size=10) +
-      geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",size=0.5) +
+      geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",linewidth=0.5) +
       theme(legend.position = "bottom")+
       xlab("Tau (Level of threshold distinctiveness)")+ylab("Functional Diversity")+
       scale_color_discrete(name="method")+
       guides(fill="none")
   }else{
-    p1 <- ggplot(forq, aes(x=q, y=estimate, color=site,linetype=site)) + geom_line(size=1.5)  + 
+    p1 <- ggplot(forq, aes(x=q, y=estimate, color=site,linetype=site)) + geom_line(linewidth=1.5)  + 
       geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=site), alpha=0.3, linetype=0) + facet_wrap(~tau, scales = "free")+
       theme(legend.key.width=unit(2,"cm"))
     p1 <- ggplot(data=forq) + 
-      geom_line(aes(x=q, y=estimate, color=site, group=site, linetype=site), size=1.2)+
+      geom_line(aes(x=q, y=estimate, color=site, group=site, linetype=site), linewidth=1.2)+
       geom_ribbon(aes(x=q,ymin=LCL, ymax=UCL, fill=site, group=site), alpha=0.3)+
       theme(legend.position = "bottom")+
       scale_color_discrete(name="method")+
       #coord_cartesian(xlim = c(0, 1))+
       facet_wrap(~tau, scales = "free")+
       #xlim("0", "1")+
-      guides(fill="none", linetype=F)
-    p2 <- ggplot(fortau, aes(x=tau, y=estimate, color=site,linetype=site)) + geom_line(size=1.5)  + 
+      guides(fill="none", linetype="none")
+    p2 <- ggplot(fortau, aes(x=tau, y=estimate, color=site,linetype=site)) + geom_line(linewidth=1.5)  + 
       geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=site), alpha=0.3, linetype=0)+
       annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
       annotate('text',x=dmean, y=0.1, label="d[mean]",parse = TRUE,size=10) +
       annotate('text',x=dmax, y=0.1, label="d[max]",parse = TRUE,size=10) +
-      geom_vline(xintercept = c(dmin,dmean,dmax), linetype = "longdash",size=0.5) +
+      geom_vline(xintercept = c(dmin,dmean,dmax), linetype = "longdash",linewidth=0.5) +
       facet_wrap(~q, scales = "free")+
       theme(legend.key.width=unit(2,"cm"))
     p2=ggplot(fortau) + 
-      geom_line(aes(x=tau, y=estimate, color=site,group=site, linetype=site), size=1.5)  + 
+      geom_line(aes(x=tau, y=estimate, color=site,group=site, linetype=site), linewidth=1.5)  + 
       geom_ribbon(aes(x=tau, ymin=LCL, ymax=UCL, fill=site), alpha=0.3)+
       annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
       annotate('text',x=dmean, y=0.1, label="d[mean]",parse = TRUE,size=10) +
       annotate('text',x=dmax, y=0.1, label="d[max]",parse = TRUE,size=10) +
       geom_vline(xintercept = c(dmin,
                                 dmean,
-                                dmax), linetype = "longdash",size=0.5) +
+                                dmax), linetype = "longdash",linewidth=0.5) +
       facet_wrap(~q, scales = "free")+
       theme(legend.position = "bottom")+
       labs(x="tau")+
       scale_color_discrete(name="method")+
-      guides(fill="none", linetype=F)
+      guides(fill="none", linetype="none")
     p1 <-  p1 +xlab("Order q")+ylab("Functional Diversity") 
     p2 <-  p2 +xlab("Tau (Level of threshold distinctiveness)")+ylab("Functional Diversity")
   }
@@ -617,31 +617,31 @@ PlotBeta <- function(out, data, dij, datatype, relative = TRUE){
                                    UCL=ifelse(UCL>=1, 1, ifelse(UCL<=0, 0, UCL)), q=q)
   p1Cforq <- ggplot(Cforq, aes(x=q, y=estimate, color=tau, linetype=tau)) + 
     geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=tau, colour=NULL), alpha=0.3, linetype=0)+
-    geom_line(size=1.5) + 
+    geom_line(linewidth=1.5) + 
     theme(legend.position = "bottom")+
     ylim(c(0,1))
   p1Uforq <- ggplot(Uforq, aes(x=q, y=estimate, color=tau, linetype=tau)) + 
     geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=tau, colour=NULL), alpha=0.3, linetype=0)+
-    geom_line(size=1.5) + 
+    geom_line(linewidth=1.5) + 
     theme(legend.position = "bottom")+
     ylim(c(0,1))
   p2Cfortau <- ggplot(Cfortau, aes(x=tau, y=estimate, color=q, linetype=q)) + 
     geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=q, colour=NULL), alpha=0.3, linetype=0)+
-    geom_line(size=1.5) + 
+    geom_line(linewidth=1.5) + 
     theme(legend.position = "bottom")+
     annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
     annotate('text',x=dmean, y=0.1, label="d[mean]",parse = TRUE,size=10) +
     annotate('text',x=dmax, y=0.1, label="d[max]",parse = TRUE,size=10) +
-    geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",size=0.5) +
+    geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",linewidth=0.5) +
     ylim(c(0,1))
   p2Ufortau <- ggplot(Ufortau, aes(x=tau, y=estimate, color=q, linetype=q)) + 
     geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=q, colour=NULL), alpha=0.3, linetype=0)+
-    geom_line(size=1.5) + 
+    geom_line(linewidth=1.5) + 
     theme(legend.position = "bottom")+
     annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
     annotate('text',x=dmean, y=0.1, label="d[mean]",parse = TRUE,size=10) +
     annotate('text',x=dmax, y=0.1, label="d[max]",parse = TRUE,size=10) +
-    geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",size=0.5) +
+    geom_vline(xintercept = c(dmin, dmean, dmax), linetype = "longdash",linewidth=0.5) +
     ylim(c(0,1))
   p1Cforq <-  p1Cforq +xlab("Order q")+ylab("Functional Differentiation") +theme(text=element_text(size=18),legend.position="bottom")+
     theme(legend.key.width=unit(2,"cm"))
