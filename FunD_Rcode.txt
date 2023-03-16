@@ -249,7 +249,7 @@ PlotFD <- function(out, data, dij, datatype){
       theme(legend.position = "bottom")+
       scale_color_discrete(name="method")+
       xlab("Order q")+ylab("Functional Diversity")+
-      guides(fill=FALSE, linetype=F)
+      guides(fill="none", linetype=F)
     p2=ggplot(fortau) + 
       geom_line(aes(x=tau, y=estimate, color=q,group=q), size=1.5)  + 
       geom_ribbon(aes(x=tau, ymin=LCL, ymax=UCL, fill=q), alpha=0.3)+
@@ -260,7 +260,7 @@ PlotFD <- function(out, data, dij, datatype){
       theme(legend.position = "bottom")+
       xlab("Tau (Level of threshold distinctiveness)")+ylab("Functional Diversity")+
       scale_color_discrete(name="method")+
-      guides(fill=FALSE)
+      guides(fill="none")
   }else{
     p1 <- ggplot(forq, aes(x=q, y=estimate, color=site,linetype=site)) + geom_line(size=1.5)  + 
       geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=site), alpha=0.3, linetype=0) + facet_wrap(~tau, scales = "free")+
@@ -273,7 +273,7 @@ PlotFD <- function(out, data, dij, datatype){
       #coord_cartesian(xlim = c(0, 1))+
       facet_wrap(~tau, scales = "free")+
       #xlim("0", "1")+
-      guides(fill=FALSE, linetype=F)
+      guides(fill="none", linetype=F)
     p2 <- ggplot(fortau, aes(x=tau, y=estimate, color=site,linetype=site)) + geom_line(size=1.5)  + 
       geom_ribbon(aes(ymin=LCL, ymax=UCL, fill=site), alpha=0.3, linetype=0)+
       annotate('text',x=dmin, y=0.1,label="d[min]" ,parse = TRUE,size=10) +
@@ -295,7 +295,7 @@ PlotFD <- function(out, data, dij, datatype){
       theme(legend.position = "bottom")+
       labs(x="tau")+
       scale_color_discrete(name="method")+
-      guides(fill=FALSE, linetype=F)
+      guides(fill="none", linetype=F)
     p1 <-  p1 +xlab("Order q")+ylab("Functional Diversity") 
     p2 <-  p2 +xlab("Tau (Level of threshold distinctiveness)")+ylab("Functional Diversity")
   }
@@ -317,7 +317,7 @@ PlotFD(FunD(fskt, dij_fskt, seq(min(dij_fskt[dij_fskt>0]), max(dij_fskt), length
 #' @return a numerical of functional dissimilarity.
 FD_Beta <- function(data, dij, tau, q, type){
   N <- ncol(data)
-  if (class(dij)=="matrix") {
+  if (class(dij)[1]=="matrix") {
     dij <- lapply(seq_len(N), function(i) dij)
   }
   dij <- lapply(seq_along(dij), function(i) {
